@@ -4,14 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Curise Booking</title>
-    <!-- Fonts -->
+    <title>Cruise Queen</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;500;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" />
-    <!-- Stylesheet -->
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -60,7 +58,7 @@
             <div class="input-group f-class">
                 <div>
                     <label for="">First Class ($150)</label>
-                    <input id="FirstTicket-count" class="inp-style inp-width" type="number" value="1">
+                    <input id="FirstTicket-count" class="inp-style inp-width" type="number" value="0">
                 </div>
                 <div class="plus-minus-btn">
                     <button id="FirstTicket-increase" class="btn btn-default"><i class="fas fa-plus"></i></button>
@@ -70,7 +68,7 @@
             <div class="input-group f-class">
                 <div>
                     <label for="">Economy ($100)</label>
-                    <input id="ecoTicket-count" class="inp-style inp-width" type="text" value="1">
+                    <input id="ecoTicket-count" class="inp-style inp-width" type="text" value="0">
                 </div>
                 <div class="plus-minus-btn">
                     <button id="ecoTicket-increase" class="btn btn-default"><i class="fas fa-plus"></i></button>
@@ -91,7 +89,7 @@
                         <p>Charge 10% VAT</p>
                     </div>
                     <div class="right">
-                        <p>$ <span id="tax-amount">50</span></p>
+                        <p>$<span id="tax-amount">00</span></p>
                     </div>
                 </div>
                 <hr>
@@ -100,14 +98,14 @@
                         <h4>Total</h4>
                     </div>
                     <div class="right">
-                        <p>$ <span id="grand-total">00</span></p>
+                        <p>$ <span id="total">00</span></p>
                     </div>
                 </div>
             </div>
             <button id="book-now" class="btn-style">Book Now</button>
         </div>
         <div id="conformation">
-            <h1 class="text-center">Your Ticket is Conformed</h1>
+            <h1 class="text-center">Your ticket is conformed</h1>
             <p class="text-justify"> Thank you for selecting our services, We will inform you before trip via email.
                 For more information please contact >> rajon26@student.sust.edu
             </p>
@@ -115,6 +113,13 @@
     </main>
 
     <script>
+        document.getElementById('FirstTicket-increase').addEventListener('click', function () {
+            updateFirstTicket(true)
+        });
+        document.getElementById('FirstTicket-decrease').addEventListener('click', function () {
+            updateFirstTicket(false)
+        });
+
         function updateFirstTicket(ticket) {
             const ticketInput = document.getElementById('FirstTicket-count').value;
             ticketCount = parseInt(ticketInput);
@@ -128,13 +133,20 @@
             document.getElementById('FirstTicket-count').value = ticketNewCount;
             const subtotal = ticketNewCount * 150;
             document.getElementById('subtotal').innerText = subtotal;
+            let taxAmount = document.getElementById('tax-amount').innerText;
+            
+            let tax = parseInt(taxAmount);
+            let taxtotal = percentage(subtotal);
+            document.getElementById('tax-amount').innerText = taxtotal;
+            let total = taxtotal + subtotal;
+            document.getElementById('total').innerText = total;
         };
 
-        document.getElementById('FirstTicket-increase').addEventListener('click', function () {
-            updateFirstTicket(true)
+        document.getElementById('ecoTicket-increase').addEventListener('click', function () {
+            updateEcoTicket(true)
         });
-        document.getElementById('FirstTicket-decrease').addEventListener('click', function () {
-            updateFirstTicket(false)
+        document.getElementById('ecoTicket-decrease').addEventListener('click', function () {
+            updateEcoTicket(false)
         });
 
         function updateEcoTicket(ticket) {
@@ -148,66 +160,24 @@
                 ticketNewCount = ticketCount - 1
             }
             document.getElementById('ecoTicket-count').value = ticketNewCount;
-            const subtotal = ticketNewCount * 100;
+            let subtotal = ticketNewCount * 100;
             document.getElementById('subtotal').innerText = subtotal;
+            let taxAmount = document.getElementById('tax-amount').innerText;
+
+            let tax = parseInt(taxAmount);
+            let taxtotal = percentage(subtotal);
+            document.getElementById('tax-amount').innerText = taxtotal;
+            let total = taxtotal + subtotal;
+            document.getElementById('total').innerText = total;
         };
 
-        document.getElementById('ecoTicket-increase').addEventListener('click', function () {
-            updateEcoTicket(true)
-        });
-        document.getElementById('ecoTicket-decrease').addEventListener('click', function () {
-            updateEcoTicket(false)
-        });
-
-
+        function percentage(num) {
+            return (num / 100) * 10;
+        }
         document.getElementById('book-now').addEventListener('click', function () {
             document.getElementById('home-page').style.display = 'none';
             document.getElementById('conformation').style.display = 'block';
-
-        })
-
-
-
-
-        // this is primary code 
-
-        // document.getElementById('FirstTicket-increase').addEventListener('click', function () {
-        //     const ticketInput = document.getElementById('FirstTicket-count').value;
-        //     ticketCount = parseInt(ticketInput);
-        //     const ticketNewCount = ticketCount + 1;
-        //     document.getElementById('FirstTicket-count').value = ticketNewCount;
-        //     const subtotal = ticketNewCount *150;
-        //  document.getElementById('subtotal').innerText = subtotal;
-
-        // });
-        // document.getElementById('FirstTicket-decrease').addEventListener('click', function () {
-        //     const ticketInput = document.getElementById('FirstTicket-count').value;
-        //     ticketCount = parseInt(ticketInput);
-        //     const ticketNewCount = ticketCount - 1;
-        //     document.getElementById('FirstTicket-count').value = ticketNewCount;
-        //     const subtotal = ticketNewCount *150;
-        //  document.getElementById('subtotal').innerText = subtotal;
-
-        // });
-        // document.getElementById('ecoTicket-increase').addEventListener('click', function () {
-        //     const ticketInput = document.getElementById('ecoTicket-count').value;
-        //     ticketCount = parseInt(ticketInput);
-        //     const ticketNewCount = ticketCount + 1;
-        //     document.getElementById('ecoTicket-count').value = ticketNewCount;
-        //     const subtotal = ticketNewCount *100;
-        //  document.getElementById('subtotal').innerText = subtotal;
-
-        // });
-        // document.getElementById('ecoTicket-decrease').addEventListener('click', function () {
-        //     const ticketInput = document.getElementById('ecoTicket-count').value;
-        //     ticketCount = parseInt(ticketInput);
-        //     const ticketNewCount = ticketCount - 1;
-        //     document.getElementById('ecoTicket-count').value = ticketNewCount;
-
-        //  const subtotal = ticketNewCount *100;
-        //  document.getElementById('subtotal').innerText = subtotal;
-
-        // });
+        });
     </script>
 </body>
 
